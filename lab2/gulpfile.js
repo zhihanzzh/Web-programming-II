@@ -11,6 +11,19 @@ const sassFiles = [
     "./src/styles/custom.scss"
 ];
 
+const vendorJsFiles = [
+    "./node_modules/jquery/dist/jquery.min.js",
+    "./node_modules/tether/dist/js/tether.min.js",
+    "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+  ];
+
+  gulp.task("js:vendor", () => {
+    gulp
+      .src(vendorJsFiles)
+      .pipe(concatenate("vendor.min.js"))
+      .pipe(gulp.dest("./public/js/"));
+  });
+
 gulp.task("sass", () => {
     gulp.src(sassFiles)
         .pipe(gulpSASS())
@@ -21,6 +34,8 @@ gulp.task("sass", () => {
         .pipe(rename("styles.min.css"))
         .pipe(gulp.dest("./public/css/"));
 });
+
+gulp.task("build", ["sass", "js:vendor"]);
 
 gulp.task("watch", () => {
     gulp.watch(sassFiles, ["sass"]);
