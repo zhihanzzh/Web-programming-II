@@ -49,7 +49,9 @@ html {
 p {
     font-size: $secondary-font-size;
 }
-
+a {
+    color: rgb(255, 255, 255);
+}
 .navigation {
     width: 100%;
     margin: 5px;
@@ -58,8 +60,7 @@ p {
     @media(min-width: 768px) {
         & {
             float: left;
-            width: 10%;
-            height: 100%;
+            width: 5%;
         }
     }
 }

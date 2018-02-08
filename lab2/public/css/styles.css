@@ -6048,6 +6048,10 @@ html {
 p {
   font-size: 5.6; }
 
+a {
+  color: white;
+  margin-bottom: 20px; }
+
 .navigation {
   width: 100%;
   margin: 5px;
@@ -6056,5 +6060,4 @@ p {
   @media (min-width: 768px) {
     .navigation {
       float: left;
-      width: 10%;
-      height: 100%; } }
+      width: 5%; } }
