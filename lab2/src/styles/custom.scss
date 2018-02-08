@@ -39,13 +39,15 @@
 
 body,
 html {
-    background: $body-background;
-    color: darken($brand-primary, 20%);
+    background: $body-bgcolor;
+    // color: darken($brand-primary, 20%);
     font-family: Courier, monospace;
     font-size: $primary-font-size;
     background-clip: border-box;
 }
-
+.card {
+    background-color: $card-bgcolor;
+}
 p {
     font-size: $secondary-font-size;
 }
@@ -54,13 +56,14 @@ a {
 }
 .navigation {
     width: 100%;
-    margin: 5px;
-    vertical-align: center;
-    background-color: rgb(73, 73, 75);
+    border-width: 1px;
+    border-style:solid;
+    border-color: rgba(76, 47, 110, 0.384);
+    background-color: $navigation-bgcolor;
     @media(min-width: 768px) {
         & {
             float: left;
-            width: 5%;
+            width: 12%;
         }
     }
 }
