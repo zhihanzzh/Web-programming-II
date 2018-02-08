@@ -37,17 +37,17 @@
 //  @import "../../node_modules/bootstrap/scss/_utilities";
 //  @import "../../node_modules/bootstrap/scss/_print";
 
-// .navigation-bar {
-//     width: 100%;
-//     margin-right: 20px;
-//     background-color: $navbar-background;
-//     @media(min-width: 768px) {
-//         & {
-//             float: left;
-//             width: 15%;
-//         }
-//     }
-// }
+.navigation-bar {
+    width: 100%;
+    margin-right: 20px;
+    background-color: black;
+    @media(min-width: 768px) {
+        & {
+            float: left;
+            width: 15%;
+        }
+    }
+}
 
 .navigation {
 	float: left;
