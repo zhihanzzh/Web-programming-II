@@ -6037,24 +6037,24 @@ a.text-dark:hover, a.text-dark:focus {
   .table-bordered td {
     border: 1px solid #ddd !important; } }
 
-.navigation-bar {
-  width: 100%;
-  margin-right: 20px;
-  background-color: black; }
-  @media (min-width: 768px) {
-    .navigation-bar {
-      float: left;
-      width: 15%; } }
+body,
+html {
+  background: #FEFEFE;
+  color: #666666;
+  font-family: Courier, monospace;
+  font-size: 14pt;
+  background-clip: border-box; }
+
+p {
+  font-size: 5.6; }
 
 .navigation {
-  float: left;
-  width: 25%; }
-
-@media (max-width: 768px) {
-  .navigation {
-    margin: auto;
-    vertical-align: center;
-    width: 100%;
-    float: none; }
-  .container-fluid {
-    width: 100%; } }
+  width: 100%;
+  margin: 5px;
+  vertical-align: center;
+  background-color: #49494b; }
+  @media (min-width: 768px) {
+    .navigation {
+      float: left;
+      width: 10%;
+      height: 100%; } }

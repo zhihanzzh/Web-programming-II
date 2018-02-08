@@ -37,31 +37,29 @@
 //  @import "../../node_modules/bootstrap/scss/_utilities";
 //  @import "../../node_modules/bootstrap/scss/_print";
 
-.navigation-bar {
-    width: 100%;
-    margin-right: 20px;
-    background-color: black;
-    @media(min-width: 768px) {
-        & {
-            float: left;
-            width: 15%;
-        }
-    }
+body,
+html {
+    background: $body-background;
+    color: darken($brand-primary, 20%);
+    font-family: Courier, monospace;
+    font-size: $primary-font-size;
+    background-clip: border-box;
+}
+
+p {
+    font-size: $secondary-font-size;
 }
 
 .navigation {
-	float: left;
-	width: 25%
-}
-
-@media (max-width: 768px) {
-    .navigation {
-        margin: auto;
-        vertical-align: center;
-        width: 100%;
-        float: none;
-    }
-    .container-fluid {
-        width: 100%;
+    width: 100%;
+    margin: 5px;
+    vertical-align: center;
+    background-color: rgb(73, 73, 75);
+    @media(min-width: 768px) {
+        & {
+            float: left;
+            width: 10%;
+            height: 100%;
+        }
     }
 }
