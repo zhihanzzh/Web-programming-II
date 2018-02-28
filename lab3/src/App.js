@@ -6,7 +6,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Welcome please Login First!</h1>
+        <h1>Welcome! please Login First!</h1>
         <button className="btn btn-primary">
           Login in with Spotify
         </button>
