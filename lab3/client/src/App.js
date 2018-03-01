@@ -10,28 +10,28 @@ class TrackList extends Component {
     console.log(this.props.tracklist)
     return (
       <div className="row">
-      {this.props.tracklist.map(track =>
-        <div className="col-sm-12 col-md-6 col-lg-3">
-          <div className="card" id="card1">
-            <div className="card-header">
-              <h1>{track.name}</h1>
-              <p>{track.artists[0].name}</p>
-              <a herf={track.artists[0].external_urls.spotify}>about the artist</a>
-            </div>
-            <img src={track.album.images[0].url} alt="" className="card-img" />
-            <div className="card-body">
-              <p>popularity:{track.popularity}</p>
-            </div>
-            <div className="card-footer">
-              <p className="card-text">Album Name: {track.album.name}</p>
-              <a href={this.props.tracklist.length > 0 ? track.preview_url : ''}>
-                <button>play</button>
-              </a>
+        {this.props.tracklist.map(track =>
+          <div className="col-sm-12 col-md-6 col-lg-3">
+            <div className="card" id="card1">
+              <div className="card-header">
+                <h1>{track.name}</h1>
+                <p>{track.artists[0].name}</p>
+                <a herf={track.artists[0].external_urls.spotify}>about the artist</a>
+              </div>
+              <img src={track.album.images[0].url} alt="" className="card-img" />
+              <div className="card-body">
+                <p>popularity:{track.popularity}</p>
+              </div>
+              <div className="card-footer">
+                <p className="card-text">Album Name: {track.album.name}</p>
+                <a href={this.props.tracklist.length > 0 ? track.preview_url : ''}>
+                  <button>play</button>
+                </a>
+              </div>
             </div>
           </div>
-        </div>
         )}
-        
+
       </div>
     );
   }
@@ -49,6 +49,7 @@ class App extends Component {
       query: '',
       tracks: []
     }
+    console.log(this.state.loggedIn)
     if (params.access_token) {
       spotifyWebApi.setAccessToken(params.access_token)
     }
@@ -72,7 +73,7 @@ class App extends Component {
         this.setState({
           tracks: response.tracks.items
         })
-        console.log(this.state.tracks)
+        
       })
   }
 
@@ -85,20 +86,26 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <a href='http://localhost:8888'>
+        {this.state.loggedIn ?
+          <div>
+            <h1>Search for a track</h1>
+            <div id="search-form">
+              <input type="text" value={this.state.query} onChange={(event) => this.onSearchChange(event)} placeholder="Type an track" />
+              <button id="search" className="btn btn-primary" onClick={this.onSearchTrack.bind(this)}>search</button>
+            </div>
+            {this.state.tracks.length > 0 ?
+              <TrackList tracklist={this.state.tracks} />
+              : ''}
+          </div> : <div>
+          <h1>Hi, welcome to this online Spotify Web Api, Please Login with spotify first!</h1>
+          <a href='http://localhost:8888/login'>
           <button className='btn btn-primary'>Login with Spotify </button>
         </a>
-        <h1>Search for a Track</h1>
-        <div id="search-form">
-          <input type="text" value={this.state.query} onChange={(event) => this.onSearchChange(event)} placeholder="Type an track" />
-          <button id="search" className="btn btn-primary" onClick={this.onSearchTrack.bind(this)}>search</button>
-        </div>
-        {this.state.tracks.length > 0 ?  
-          <TrackList tracklist={this.state.tracks} />
-         : ''}
+          </div>
+        }
       </div>
     );
-  } 
+  }
 }
 
 export default App;
