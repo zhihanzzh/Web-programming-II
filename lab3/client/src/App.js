@@ -9,29 +9,30 @@ class TrackList extends Component {
   render() {
     console.log(this.props.tracklist)
     return (
-      <div>
-        <div className="col-sm-12 col-md-6 col-lg-4">
+      <div className="row">
+      {this.props.tracklist.map(track =>
+        <div className="col-sm-12 col-md-6 col-lg-3">
           <div className="card" id="card1">
             <div className="card-header">
-              <h1>{this.props.tracklist[0].name}</h1>
-              <p>{this.props.tracklist[0].artists[0].name}</p>
-              <a herf={this.props.tracklist[0].artists[0].href} >about the artist</a>
+              <h1>{track.name}</h1>
+              <p>{track.artists[0].name}</p>
+              <a herf={track.artists[0].external_urls.spotify}>about the artist</a>
             </div>
-            <img src={this.props.tracklist[0].album.images[0].url} alt="" className="card-img" />
+            <img src={track.album.images[0].url} alt="" className="card-img" />
             <div className="card-body">
-              <p>popularity:{this.props.tracklist[0].popularity}</p>
+              <p>popularity:{track.popularity}</p>
             </div>
             <div className="card-footer">
-              <p className="card-text">Album Name: {this.props.tracklist[0].album.name}</p>
-              <a href={this.props.tracklist.length > 0 ? this.props.tracklist[0].preview_url : ''}>
+              <p className="card-text">Album Name: {track.album.name}</p>
+              <a href={this.props.tracklist.length > 0 ? track.preview_url : ''}>
                 <button>play</button>
               </a>
             </div>
           </div>
         </div>
+        )}
+        
       </div>
-
-
     );
   }
 }
@@ -92,12 +93,12 @@ class App extends Component {
           <input type="text" value={this.state.query} onChange={(event) => this.onSearchChange(event)} placeholder="Type an track" />
           <button id="search" className="btn btn-primary" onClick={this.onSearchTrack.bind(this)}>search</button>
         </div>
-        {this.state.tracks.length > 0 ?  <TrackList tracklist={this.state.tracks} /> : ''}
-       
-
+        {this.state.tracks.length > 0 ?  
+          <TrackList tracklist={this.state.tracks} />
+         : ''}
       </div>
     );
-  }
+  } 
 }
 
 export default App;
