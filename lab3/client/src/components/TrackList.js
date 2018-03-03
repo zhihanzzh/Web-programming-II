@@ -1,3 +1,5 @@
+import React from "react";
+
 class TrackList extends Component {
     render() {
       console.log(this.props.tracklist)
@@ -30,3 +32,5 @@ class TrackList extends Component {
       );
     }
   }
+
+  export default TrackList;
