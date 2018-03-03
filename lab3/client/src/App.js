@@ -14,19 +14,19 @@ class TrackList extends Component {
             <div className="card" id="card1">
               <div className="card-header">
                 <h1>{track.name}</h1>
-                <p>{track.artists[0].name}</p>
-                <a href={track.artists[0].external_urls.spotify}>About the Artist</a>
+                <a href={track.artists[0].external_urls.spotify}>{track.artists[0].name}</a>
               </div>
               <img src={track.album.images[0].url} alt="" className="card-img" />
               <div className="card-body">
                 <p>popularity:{track.popularity}</p>
               </div>
               <div className="card-footer">
-                <p className="card-text">Album Name: {track.album.name}</p>
+              <p className="card-text">
+              <a href={track.album.external_urls.spotify}>Album Name: {track.album.name}</a>
+              </p>
                 <audio controls src={this.props.tracklist.length > 0 ? track.preview_url : ''}>
                 Your browser does not support the audio element.
                 </audio>
-                <a href={track.artists[0].external_urls.spotify}>About the Artist</a>
               </div>
             </div>
           </div>
