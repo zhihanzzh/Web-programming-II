@@ -24,9 +24,9 @@ class TrackList extends Component {
               </div>
               <div className="card-footer">
                 <p className="card-text">Album Name: {track.album.name}</p>
-                <a href={this.props.tracklist.length > 0 ? track.preview_url : ''}>
-                  <button>play</button>
-                </a>
+                <audio controls src={this.props.tracklist.length > 0 ? track.preview_url : ''}>
+                df
+                </audio>
               </div>
             </div>
           </div>
