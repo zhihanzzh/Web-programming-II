@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Spotify from 'spotify-web-api-js';
 
@@ -16,7 +15,7 @@ class TrackList extends Component {
               <div className="card-header">
                 <h1>{track.name}</h1>
                 <p>{track.artists[0].name}</p>
-                <a herf={track.artists[0].external_urls.spotify}>about the artist</a>
+                <a href={track.artists[0].external_urls.spotify}>About the Artist</a>
               </div>
               <img src={track.album.images[0].url} alt="" className="card-img" />
               <div className="card-body">
@@ -25,8 +24,9 @@ class TrackList extends Component {
               <div className="card-footer">
                 <p className="card-text">Album Name: {track.album.name}</p>
                 <audio controls src={this.props.tracklist.length > 0 ? track.preview_url : ''}>
-                df
+                Your browser does not support the audio element.
                 </audio>
+                <a href={track.artists[0].external_urls.spotify}>About the Artist</a>
               </div>
             </div>
           </div>
