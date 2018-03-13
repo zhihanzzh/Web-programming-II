@@ -42,13 +42,6 @@ app.get('/api/people/:id', async (req, res) => {
     }
 })
 
-
-app.get("/flushall", async (req, res) => {
-    client.flushdb(function(err, succeeded) {
-        res.json(succeeded);
-    });
-})
-
 app.listen(3000, () => {
     console.log("We've now got a server!");
     console.log("Your routes will be running on http://localhost:3000");
