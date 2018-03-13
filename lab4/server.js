@@ -16,7 +16,6 @@ let userList = [];
 app.get('/api/people/history', async (req, res) => {
     let result = [];
     const len = await client.llenAsync('history')
-    console.log(`len=${len}`)
     userList = await client.lrangeAsync('history',0,len)
     for (let i = 0; i < len && i < 20; i++) {
         let user = JSON.parse(userList[i])
@@ -34,7 +33,6 @@ app.get('/api/people/:id', async (req, res) => {
     } else {
         try {
             let person = await data.getById(req.params.id)
-            console.log(person)
             await client.setAsync(req.params.id, JSON.stringify(person));
             await client.lpush('history', JSON.stringify(person));
             res.json(person)
