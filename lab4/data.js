@@ -4,11 +4,11 @@ let list = [
 ]
 
 
-let targetPerson = null;
+let targetPerson = {};
 let exportedMethods = {
     getById : (id) => {
         for (let i = 0; i < list.length; i++) {
-            if (list[i]['id'] === id) {
+            if (list[i]['id'] == id) {
                 targetPerson = list[i];
                 break
             }
