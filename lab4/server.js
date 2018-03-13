@@ -11,7 +11,6 @@ const data = require('./data.js');
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
 
-
 let userList = [];
 app.get('/api/people/history', async (req, res) => {
     let result = [];

@@ -1000,6 +1000,7 @@ let list = [{"id":1,"first_name":"Raymond","last_name":"Washington","email":"rwa
 {"id":1000,"first_name":"Amanda","last_name":"Burns","email":"aburnsrr@friendfeed.com","gender":"Female","ip_address":"16.12.11.95"}]
 
 let targetPerson = {};
+
 let exportedMethods = {
     getById : (id) => {
         for (let i = 0; i < list.length; i++) {
@@ -1019,6 +1020,5 @@ let exportedMethods = {
         });
     }
 }
-
 
 module.exports = exportedMethods;
