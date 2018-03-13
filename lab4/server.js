@@ -21,3 +21,22 @@ app.get('/api/people/history', async (req, res) => {
     }
     res.json(result)
 }) 
+
+app.get('/api/people/:id', async (req,res) => {
+
+    let user = client.getAsync(req.param.id);
+
+    if(user) {
+        res.json(JSON.parse(user))
+        await client.lpush('list',people);
+    } else {
+        try {
+            let person = data.getById(req.param.id)
+            await client.setAsync(req.params.id, JSON.stringify(person));
+            await client.lpush('history', JSON.stringify(person));
+            res.json(person)
+        } catch (e){
+
+        }
+    }
+})
