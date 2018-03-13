@@ -15,28 +15,33 @@ bluebird.promisifyAll(redis.Multi.prototype);
 let userList = [];
 app.get('/api/people/history', async (req, res) => {
     let result = [];
-    for(let i = 0; i < userList.length && i < 20; i++) {
+    for (let i = 0; i < userList.length && i < 20; i++) {
         let user = JSON.parse(await client.getAsync(userList[i]))
         result.push(user)
     }
     res.json(result);
-}) 
+})
 
-app.get('/api/people/:id', async (req,res) => {
+app.get('/api/people/:id', async (req, res) => {
 
     let user = client.getAsync(req.param.id);
 
-    if(user) {
+    if (user) {
         res.json(JSON.parse(user))
-        await client.lpush('history',JSON.parse(user));
+        await client.lpush('history', JSON.parse(user));
     } else {
         try {
             let person = data.getById(req.param.id)
             await client.setAsync(req.params.id, JSON.stringify(person));
             await client.lpush('history', JSON.stringify(person));
             res.json(person)
-        } catch (e){
+        } catch (e) {
             response.status(400).json({ e: "No person found with provided ID" });
         }
     }
 })
+
+app.listen(3000, () => {
+    console.log("We've now got a server!");
+    console.log("Your routes will be running on http://localhost:3000");
+});
