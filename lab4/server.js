@@ -19,7 +19,7 @@ app.get('/api/people/history', async (req, res) => {
         let user = JSON.parse(await client.getAsync(userList[i]))
         result.push(user)
     }
-    res.json(result)
+    res.json(result);
 }) 
 
 app.get('/api/people/:id', async (req,res) => {
