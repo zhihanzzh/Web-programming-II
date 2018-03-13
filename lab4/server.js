@@ -16,24 +16,25 @@ let userList = [];
 app.get('/api/people/history', async (req, res) => {
     let result = [];
     const len = await client.llenAsync('history')
-    userList = await client.lrangeAsync('list',0,len)
+    console.log(`len=${len}`)
+    userList = await client.lrangeAsync('history',0,len)
     for (let i = 0; i < len && i < 20; i++) {
-        let user = JSON.parse(await client.getAsync(userList[i]))
+        let user = JSON.parse(userList[i])
         result.push(user)
     }
     res.json(result)
 })
 
 app.get('/api/people/:id', async (req, res) => {
-
-    let user = await client.getAsync(req.params.id);
-
-    if (user) {
+    let exists = await client.existsAsync(req.params.id);
+    if (exists) {
+        let user = await client.getAsync(req.params.id);
         res.json(JSON.parse(user))
-        await client.lpush('history', JSON.parse(user));
+        await client.lpush('history', user);
     } else {
         try {
             let person = await data.getById(req.params.id)
+            console.log(person)
             await client.setAsync(req.params.id, JSON.stringify(person));
             await client.lpush('history', JSON.stringify(person));
             res.json(person)
@@ -41,6 +42,13 @@ app.get('/api/people/:id', async (req, res) => {
             response.status(400).json({ e: "No person found with provided ID" });
         }
     }
+})
+
+
+app.get("/flushall", async (req, res) => {
+    client.flushdb(function(err, succeeded) {
+        res.json(succeeded);
+    });
 })
 
 app.listen(3000, () => {
