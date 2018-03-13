@@ -36,7 +36,7 @@ app.get('/api/people/:id', async (req,res) => {
             await client.lpush('history', JSON.stringify(person));
             res.json(person)
         } catch (e){
-
+            response.status(400).json({ e: "No person found with provided ID" });
         }
     }
 })
