@@ -49,8 +49,8 @@ redisConnection.on("create-person:request:*", (message, channel) => {
 
     let info = message.data.message;
 
-    let successEventName = `${eventName}:success:${requestId}`;
-    let failedEventName = `${eventName}:failed:${requestId}`;
+    let successEvent = `${eventName}:success:${requestId}`;
+    let failedEvent = `${eventName}:failed:${requestId}`;
 
     let error = '';
 
@@ -81,8 +81,7 @@ redisConnection.on("create-person:request:*", (message, channel) => {
         }
     }
     if(!flag) {
-        console.log(list[j])
-        redisConnection.emit(failedEventName, {
+        redisConnection.emit(failedEvent, {
             requestId: requestId,
             data: {
                 message: "Didn't find person with provided ID"
@@ -90,7 +89,7 @@ redisConnection.on("create-person:request:*", (message, channel) => {
             eventName: eventName
         });
     } else if (error !== '') {
-        redisConnection.emit(failedEventName, {
+        redisConnection.emit(failedEvent, {
             requestId: requestId,
             data: {
                 message: error
@@ -99,7 +98,7 @@ redisConnection.on("create-person:request:*", (message, channel) => {
         });
     } else {
         list.push(info);
-        redisConnection.emit(failedEventName, {
+        redisConnection.emit(successEvent, {
             requestId: requestId,
             data: info,
             eventName: eventName
@@ -113,8 +112,8 @@ redisConnection.on("delete-person:request:*", (message, channel) => {
 
     let id = message.data.message;
 
-    let successEventName = `${eventName}:success:${requestId}`;
-    let failedEventName = `${eventName}:failed:${requestId}`;
+    let successEvent = `${eventName}:success:${requestId}`;
+    let failedEvent = `${eventName}:failed:${requestId}`;
 
     let flag = false;
     let response;
@@ -127,7 +126,7 @@ redisConnection.on("delete-person:request:*", (message, channel) => {
     }
 
     if(!flag) {
-        redisConnection.emit(failedEventName, {
+        redisConnection.emit(failedEvent, {
             requestId: requestId,
             data: {
                 message: "Didn't find person with provided ID"
@@ -135,7 +134,7 @@ redisConnection.on("delete-person:request:*", (message, channel) => {
             eventName: eventName
         });
     } else {
-        redisConnection.emit(successEventName, {
+        redisConnection.emit(successEvent, {
             requestId: requestId,
             data:  {
                 message:"delete succeed"
@@ -152,8 +151,8 @@ redisConnection.on("update-person:request:*", (message, channel) => {
 
     let info = message.data.message;
     let id = message.data.id;
-    let successEventName = `${eventName}:success:${requestId}`;
-    let failedEventName = `${eventName}:failed:${requestId}`;
+    let successEvent = `${eventName}:success:${requestId}`;
+    let failedEvent = `${eventName}:failed:${requestId}`;
 
     let error = '';
     if (info.id === null || info.id === undefined) {
@@ -184,7 +183,7 @@ redisConnection.on("update-person:request:*", (message, channel) => {
     }
 
     if (error !== '') {
-        redisConnection.emit(failedEventName, {
+        redisConnection.emit(failedEvent, {
             requestId: requestId,
             data: {
                 message: error
@@ -192,7 +191,7 @@ redisConnection.on("update-person:request:*", (message, channel) => {
             eventName: eventName
         });
     } else if(!flag) {
-        redisConnection.emit(failedEventName, {
+        redisConnection.emit(failedEvent, {
             requestId: requestId,
             data: {
                 message: "Didn't find person with provided ID"
@@ -200,7 +199,7 @@ redisConnection.on("update-person:request:*", (message, channel) => {
             eventName: eventName
         });
     } else {
-        redisConnection.emit(successEventName, {
+        redisConnection.emit(successEvent, {
             requestId: requestId,
             data: info,
             eventName: eventName
