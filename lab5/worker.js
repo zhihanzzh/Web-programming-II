@@ -1,13 +1,15 @@
 
 
-const fs =require('fs');
-//const peopleList=JSON.parse(fs.readFileSync('dood.json'));
-
+//const fs =require('fs');
+const axios = require("axios");
+const gistUrl = 'https://gist.githubusercontent.com/philbarresi/5cf15393d245b38a2d86ce8207d5076c/raw/d529fb474c1af347702ca4d7b992256237fa2819/lab5.json';
 const redisConnection = require("./redis-connection");
 
-let list = JSON.parse(fs.readFileSync('dood.json'));
+//let list = JSON.parse(fs.readFileSync('dood.json'));
 
-redisConnection.on("get-person:request:*", (message, channel) => {
+redisConnection.on("get-person:request:*", async (message, channel) => {
+    const gist = await axios.get(gistUrl);
+    let list = gist.data;
     let requestId = message.requestId;
     let eventName = message.eventName;
 
@@ -19,14 +21,14 @@ redisConnection.on("get-person:request:*", (message, channel) => {
     let flag = false;
     let person = null;
 
-    for(let i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
         if (list[i]["id"] == id) {
             flag = true;
             person = list[i];
             break;
         }
     }
-    if(!flag) {
+    if (!flag) {
         redisConnection.emit(failedEvent, {
             requestId: requestId,
             data: {
@@ -37,13 +39,15 @@ redisConnection.on("get-person:request:*", (message, channel) => {
     } else {
         redisConnection.emit(successEvent, {
             requestId: requestId,
-            data:  person,
+            data: person,
             eventName: eventName
         });
     }
 });
 
-redisConnection.on("create-person:request:*", (message, channel) => {
+redisConnection.on("create-person:request:*",async (message, channel) => {
+    const gist = await axios.get(gistUrl);
+    let list = gist.data;
     let requestId = message.requestId;
     let eventName = message.eventName;
 
@@ -74,13 +78,13 @@ redisConnection.on("create-person:request:*", (message, channel) => {
     }
 
     let flag = true;
-    for(let i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
         if (list[i]["id"] == info.id) {
             flag = false;
             break;
         }
     }
-    if(!flag) {
+    if (!flag) {
         redisConnection.emit(failedEvent, {
             requestId: requestId,
             data: {
@@ -106,7 +110,9 @@ redisConnection.on("create-person:request:*", (message, channel) => {
     }
 });
 
-redisConnection.on("delete-person:request:*", (message, channel) => {
+redisConnection.on("delete-person:request:*",async (message, channel) => {
+    const gist = await axios.get(gistUrl);
+    let list = gist.data;
     let requestId = message.requestId;
     let eventName = message.eventName;
 
@@ -117,15 +123,15 @@ redisConnection.on("delete-person:request:*", (message, channel) => {
 
     let flag = false;
     let response;
-    for(let i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
         if (list[i]["id"] == id) {
             flag = true;
-            list.splice(i,1);
+            list.splice(i, 1);
             break;
         }
     }
 
-    if(!flag) {
+    if (!flag) {
         redisConnection.emit(failedEvent, {
             requestId: requestId,
             data: {
@@ -136,8 +142,8 @@ redisConnection.on("delete-person:request:*", (message, channel) => {
     } else {
         redisConnection.emit(successEvent, {
             requestId: requestId,
-            data:  {
-                message:"delete succeed"
+            data: {
+                message: "delete succeed"
             },
             eventName: eventName
         });
@@ -145,7 +151,9 @@ redisConnection.on("delete-person:request:*", (message, channel) => {
 });
 
 
-redisConnection.on("update-person:request:*", (message, channel) => {
+redisConnection.on("update-person:request:*",async (message, channel) => {
+    const gist = await axios.get(gistUrl);
+    let list = gist.data;
     let requestId = message.requestId;
     let eventName = message.eventName;
 
@@ -174,10 +182,10 @@ redisConnection.on("update-person:request:*", (message, channel) => {
         error = "please provide a valid ID";
     }
     let flag = false;
-    for(let i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
         if (list[i]["id"] == id) {
             flag = true;
-            list.splice(i,1, info);
+            list.splice(i, 1, info);
             break;
         }
     }
@@ -190,7 +198,7 @@ redisConnection.on("update-person:request:*", (message, channel) => {
             },
             eventName: eventName
         });
-    } else if(!flag) {
+    } else if (!flag) {
         redisConnection.emit(failedEvent, {
             requestId: requestId,
             data: {
