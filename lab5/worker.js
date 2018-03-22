@@ -1,4 +1,4 @@
-var list = [{"id":1,"first_name":"Raymond","last_name":"Washington","email":"rwashington0@vkontakte.ru","gender":"Male","ip_address":"214.64.240.51"},
+let list = [{"id":1,"first_name":"Raymond","last_name":"Washington","email":"rwashington0@vkontakte.ru","gender":"Male","ip_address":"214.64.240.51"},
 {"id":2,"first_name":"Betty","last_name":"Bowman","email":"bbowman1@google.fr","gender":"Female","ip_address":"52.66.0.78"},
 {"id":3,"first_name":"Joan","last_name":"Harris","email":"jharris2@soup.io","gender":"Female","ip_address":"198.212.238.225"},
 {"id":4,"first_name":"Louise","last_name":"Morris","email":"lmorris3@berkeley.edu","gender":"Female","ip_address":"117.225.229.159"},
@@ -1012,7 +1012,7 @@ redisConnection.on("get-person:request:*", (message, channel) => {
     let requestId = message.requestId;
     let eventName = message.eventName;
 
-    let id = message.data.id;
+    let id = message.data.message;
 
     let successEvent = `${eventName}:success:${requestId}`;
     let failedEvent = `${eventName}:failed:${requestId}`;
@@ -1054,6 +1054,7 @@ redisConnection.on("create-person:request:*", (message, channel) => {
     let failedEventName = `${eventName}:failed:${requestId}`;
 
     let error = '';
+
     if (info.id === null || info.id === undefined) {
         error = "please provide a valid ID";
     }
@@ -1074,15 +1075,16 @@ redisConnection.on("create-person:request:*", (message, channel) => {
     }
 
     let flag = true;
-    let response;
+    let j = 5;
     for(let i = 0; i < list.length; i++) {
-        if (list[i]["id"] == id) {
+        if (list[i]["id"] == info.id) {
             flag = false;
+            j = i;
             break;
         }
     }
-
     if(!flag) {
+        console.log(list[j])
         redisConnection.emit(failedEventName, {
             requestId: requestId,
             data: {
@@ -1152,11 +1154,9 @@ redisConnection.on("update-person:request:*", (message, channel) => {
     let eventName = message.eventName;
 
     let info = message.data.message;
-    let id = message.data.id
-
+    let id = message.data.id;
     let successEventName = `${eventName}:success:${requestId}`;
     let failedEventName = `${eventName}:failed:${requestId}`;
-
 
     let error = '';
     if (info.id === null || info.id === undefined) {
@@ -1177,9 +1177,7 @@ redisConnection.on("update-person:request:*", (message, channel) => {
     if (info.ip_address === null || info.ip_address === undefined) {
         error = "please provide a valid ID";
     }
-
     let flag = false;
-    let response;
     for(let i = 0; i < list.length; i++) {
         if (list[i]["id"] == id) {
             flag = true;
@@ -1188,7 +1186,7 @@ redisConnection.on("update-person:request:*", (message, channel) => {
         }
     }
 
-    if (erre !== '') {
+    if (error !== '') {
         redisConnection.emit(failedEventName, {
             requestId: requestId,
             data: {

@@ -1,3 +1,3 @@
-const fs =require('fs');
-let list = JSON.parse(fs.readFileSync('dood.json'));
-console.log(list[1]["id"])
+let list = [1,2,3,4]
+list.splice(2,1)
+console.log(list)

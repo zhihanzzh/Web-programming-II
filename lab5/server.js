@@ -14,7 +14,7 @@ app.get("/api/people/:id", async (req, res) => {
             redis: redisConnection,
             eventName: "get-person",
             data: {
-                id: parseInt(req.params.id)
+                message: parseInt(req.params.id)
             }
         });
         res.json(response);
