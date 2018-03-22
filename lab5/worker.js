@@ -84,7 +84,7 @@ redisConnection.on("create-person:request:*", (message, channel) => {
         redisConnection.emit(failedEvent, {
             requestId: requestId,
             data: {
-                message: "Didn't find person with provided ID"
+                message: "The person with provided ID is already existed"
             },
             eventName: eventName
         });
