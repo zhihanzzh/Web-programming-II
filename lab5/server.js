@@ -1,8 +1,8 @@
-const express = require("express");
-const bodyParser = require("body-parser");
+const express = require('express');
+const bodyParser = require('body-parser');
 
-const nrpSender = require("./nrp-sender-shim");
-const redisConnection = require("./redis-connection");
+const nrpSender = require('./nrp-sender-shim');
+const redisConnection = require('./redis-connection');
 
 const app = express();
 
@@ -14,7 +14,7 @@ app.get("/api/people/:id", async (req, res) => {
             redis: redisConnection,
             eventName: "get-person",
             data: {
-                message: parseInt(req.params.id)
+                id: parseInt(req.params.id)
             }
         });
         res.json(response);
