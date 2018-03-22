@@ -1050,8 +1050,8 @@ redisConnection.on("create-person:request:*", (message, channel) => {
 
     let info = message.data.message;
 
-    let successEventName = `${eventName}:success:${messageId}`;
-    let failedEventName = `${eventName}:failed:${messageId}`;
+    let successEventName = `${eventName}:success:${requestId}`;
+    let failedEventName = `${eventName}:failed:${requestId}`;
 
     let error = '';
     if (info.id === null || info.id === undefined) {
@@ -1114,8 +1114,8 @@ redisConnection.on("delete-person:request:*", (message, channel) => {
 
     let id = message.data.message;
 
-    let successEventName = `${eventName}:success:${messageId}`;
-    let failedEventName = `${eventName}:failed:${messageId}`;
+    let successEventName = `${eventName}:success:${requestId}`;
+    let failedEventName = `${eventName}:failed:${requestId}`;
 
     let flag = false;
     let response;
