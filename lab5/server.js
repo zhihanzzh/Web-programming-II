@@ -14,7 +14,7 @@ app.get("/api/people/:id", async (req, res) => {
             redis: redisConnection,
             eventName: "get-person",
             data: {
-                message: req.params.id
+                message: parseInt(req.params.id)
             }
         });
         res.json(response);
@@ -44,7 +44,7 @@ app.delete("/api/people/:id", async (req, res) => {
             redis: redisConnection,
             eventName: "delete-person",
             data: {
-                message: req.params.id
+                message: parseInt(req.params.id)
             }
         });
         res.json(response);
@@ -59,7 +59,7 @@ app.put("/api/people/:id", async (req, res) => {
             redis: redisConnection,
             eventName: "update-person",
             data: {
-                message: req.params.id
+                message: parseInt(req.params.id)
             }
         });
         res.json(response);
