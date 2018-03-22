@@ -67,3 +67,8 @@ app.put("/api/people/:id", async (req, res) => {
         res.json({ error: e.message });
     }
 })
+
+app.listen(3000, () => {
+    console.log("We've now got a server!");
+    console.log("Your routes will be running on http://localhost:3000");
+  });
