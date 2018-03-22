@@ -1,30 +1,14 @@
-const redisConnection = require("./redis-connection");
+var fs = require('fs');
+const http = require('https');
+const redisConnection = require('./redis-connection');
+const url = 'https://gist.githubusercontent.com/philbarresi/5cf15393d245b38a2d86ce8207d5076c/raw/d529fb474c1af347702ca4d7b992256237fa2819/lab5.json';
 
-redisConnection.on("send-message:request:*", (message, channel) => {
-  let messageText = message.data.message;
-  console.log("\n\n\n=================");
-  console.log("We've received a message from the API server! It's:");
-  console.log(messageText);
-  console.log(JSON.stringify(message));
-  console.log("=================\n\n\n");
-});
-
-redisConnection.on("send-message-with-reply:request:*", (message, channel) => {
-  let requestId = message.requestId;
-  let eventName = message.eventName;
-
-  let messageText = message.data.message;
-  let successEvent = `${eventName}:success:${requestId}`;
-
-  redisConnection.emit(successEvent, {
-    requestId: requestId,
-    data: {
-      message: messageText,
-      reversedMessage: messageText
-        .split("")
-        .reverse()
-        .join("")
-    },
-    eventName: eventName
-  });
+let data = http.get(url, function (response) {
+    // data = JSON.parse(response.statusCode);
+     response.pipe(fs.createWriteStream('dood.json')).on('close', function() {
+        var bu = fs.createReadStream('dood.json');
+        bu.on('data', function(chunk) {
+            console.log(chunk.toString());
+        });
+     })
 });
