@@ -55,11 +55,13 @@ app.delete("/api/people/:id", async (req, res) => {
 
 app.put("/api/people/:id", async (req, res) => {
     try {
+        
         let response = await nrpSender.sendMessage({
             redis: redisConnection,
             eventName: "update-person",
             data: {
-                message: parseInt(req.params.id)
+                message: req.body,
+                id:parseInt(req.params.id)
             }
         });
         res.json(response);
