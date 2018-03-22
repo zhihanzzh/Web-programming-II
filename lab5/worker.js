@@ -74,11 +74,9 @@ redisConnection.on("create-person:request:*", (message, channel) => {
     }
 
     let flag = true;
-    let j = 5;
     for(let i = 0; i < list.length; i++) {
         if (list[i]["id"] == info.id) {
             flag = false;
-            j = i;
             break;
         }
     }
