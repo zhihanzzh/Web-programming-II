@@ -16,6 +16,7 @@ io.on('connection', function (socket) {
                 eventName: 'search',
                 data: msg
             });
+            console.log(response)
            // io.emit('response', response);
         } catch (e) {
             socket.emit('request-fail', e.message);
