@@ -10,20 +10,53 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <h1>welcome! just type anything you wannna search for</h1>
-    <label>username</label>
-    <input id="username" value="username">
-    <input type="button" value="submit" id="usernameBtn" />
-    <label>image</label>
-    <input id="image" value="image">
-    <button type="submit">submit</button>
-    <label>message</label>
-    <input id="message" value="meassage">
-    <button type="submit">submit</button>
+    <form>
+        <label>username</label>
+        <input id="username" value="username">
+
+        <label>image</label>
+        <input id="image" value="image">
+
+        <label>message</label>
+        <input id="message" value="message">
+        <input type="button" value="submit" id="Btn" />
+
+    </form>
+    <div id="results"></div>
     <script>
         const socket = io();
-        document.getElementById("usernameBtn").onclick = function () {
-            socket.emit("direct message", document.getElementById("username").value);
+        document.getElementById("Btn").onclick = function () {
+            let data = {
+                name: document.getElementById("username").value,
+                img: document.getElementById("image").value,
+                message: document.getElementById("message").value
+            }
+            socket.emit("direct message", data);
         }
+
+        socket.on('response', function (response) {
+            console.log(response);
+            let resultsContainer = $('#results');
+            let hits = response.results.hits;
+            for (let i = 0; i < hits.length; i++) {
+                let newImg = document.createElement('img');
+                newImg.src = hits[i].previewURL;
+                newImg.alt = 'A pixabay result tagged ' +
+                    hits[i].tags + ' uploaded by ' + hits[i].user;
+                resultsContainer.prepend(newImg);
+            }
+            let newMsg = document.createElement('p');
+            newMsg.className = 'message';
+            let userSpan = document.createElement('span');
+            let nameText = document.createTextNode(response.name);
+            userSpan.appendChild(nameText);
+            userSpan.className = 'user';
+            let text = document.createTextNode(' says: ' + response.message);
+            newMsg.appendChild(userSpan);
+            newMsg.appendChild(text);
+            resultsContainer.prepend(newMsg);
+        });
+
 
     </script>
 </body>
