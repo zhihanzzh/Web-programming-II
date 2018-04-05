@@ -2,10 +2,6 @@ const PixabayApi = require('node-pixabayclient');
 const PixabayPhotos = new PixabayApi({ apiUrl: "https://pixabay.com/api/" });
 const redisConnection = require('./redis-connection.js');
 
-
-
-
-
 redisConnection.on('search:request:*', async function (message, channel) {
     let requestId = message.requestId;
     let eventName = message.eventName;
@@ -16,9 +12,6 @@ redisConnection.on('search:request:*', async function (message, channel) {
     let name = message.data.name;
     let img = message.data.img;
     let msg = message.data.message;
-
-    console.log("name");
-
     try {
         let params = {
             key: "8594252-c5bcbfbb14b8e301fde5f14b1",
@@ -31,10 +24,6 @@ redisConnection.on('search:request:*', async function (message, channel) {
               console.log('- ' + errors.join('\n- '));
               return;
             }
-          
-            console.log('Photos request:');
-            console.log(req);
-            console.log(res.hits[0])
             redisConnection.emit(successEvent, {
                 requestId,
                 eventName,

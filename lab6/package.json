@@ -10,7 +10,6 @@
   "author": "Han",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.18.0",
     "express": "^4.16.3",
     "node-pixabayclient": "^1.0.0",
     "node-redis-pubsub": "^2.0.0",

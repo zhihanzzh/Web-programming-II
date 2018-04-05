@@ -1,6 +1,5 @@
 const uuid = require("node-uuid");
 const NRP = require("node-redis-pubsub");
-
 const nrpConfig = {
   port: 6379,
   scope: "search"
