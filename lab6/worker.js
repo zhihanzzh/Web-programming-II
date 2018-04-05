@@ -14,18 +14,15 @@ redisConnection.on('search:request:*', async function (message, channel) {
     let failedEvent = eventName + ':failed:' + requestId;
 
     let name = message.data.name;
-    let img = encodeURIComponent(message.data.img);
+    let img = message.data.img;
     let msg = message.data.message;
 
-
-    let searchString = '?q=' + img;
     console.log("name");
 
     try {
-        // let response = await axiosInstance.get(searchString);
         let params = {
             key: "8594252-c5bcbfbb14b8e301fde5f14b1",
-            q: img, // automatically URL-encoded
+            q: img, 
             image_type: "photo",
           };
         PixabayPhotos.query(params, function(errors, res, req) {
@@ -37,7 +34,7 @@ redisConnection.on('search:request:*', async function (message, channel) {
           
             console.log('Photos request:');
             console.log(req);
-        
+            console.log(res.hits[0])
             redisConnection.emit(successEvent, {
                 requestId,
                 eventName,

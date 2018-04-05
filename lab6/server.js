@@ -16,8 +16,13 @@ io.on('connection', function (socket) {
                 eventName: 'search',
                 data: msg
             });
+            let hits = response.results.hits;
             console.log(response)
-           // io.emit('response', response);
+            //console.log(response.results.hits.length)
+            for (let i = 0; i < hits.length; i++) {
+                console.log(i);
+            }
+            io.emit('response', response);
         } catch (e) {
             socket.emit('request-fail', e.message);
         }

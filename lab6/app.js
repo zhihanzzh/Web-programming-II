@@ -1,22 +1,12 @@
-const PixabayApi = require('node-pixabayclient');
-const PixabayPhotos = new PixabayApi({ apiUrl: "https://pixabay.com/api/" });
+const app = require('express')();
+const http = require("http").Server(app);
 
-var params = {
-  key: "8594252-c5bcbfbb14b8e301fde5f14b1",
-  q: "yellow flowers", // automatically URL-encoded
-  image_type: "photo",
-};
 
-PixabayPhotos.query(params, function(errors, res, req) {
-  if (errors) {
-    console.log('One or more errors were encountered:');
-    console.log('- ' + errors.join('\n- '));
-    return;
-  }
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+});
 
-  console.log('Photos request:');
-  console.log(req);
-
-  console.log('Photos API response:');
-  console.log(res);
+http.listen(3000, () => {
+    console.log("We've now got a server!");
+    console.log("Your routes will be running on http://localhost:3000");
 });
