@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
 
 io.on('connection', function (socket) {
     console.log('a user connected');
-    socket.on("direct message", async (msg) => {
+    socket.on("query", async (msg) => {
         try {
             let response = await nrpSender.sendMessage({
                 eventName: 'search',

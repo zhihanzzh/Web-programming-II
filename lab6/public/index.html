@@ -8,15 +8,15 @@
 
 <body>
     <script src="/socket.io/socket.io.js"></script>
-    
+
     <h1>welcome! just type anything you wanna search for</h1>
     <form>
         <label>username</label>
-        <input id="username" value="username">
+        <input id="username">
         <label>image</label>
-        <input id="image" value="image">
+        <input id="image">
         <label>message</label>
-        <input id="message" value="message">
+        <input id="message">
         <input type="button" value="submit" id="Btn" />
     </form>
     <div id="results"></div>
@@ -28,13 +28,19 @@
                 img: document.getElementById("image").value,
                 message: document.getElementById("message").value
             }
-            socket.emit("direct message", data);
+           
+            
+            document.getElementById("username").setAttribute("readonly", true);
+            socket.emit("query", data);
+            document.getElementById("message").setAttribute("value", ''); 
+            document.getElementById("image").setAttribute("value", '');
         }
+
 
         socket.on('response', function (response) {
             let newMsg = document.createElement('p');
             let nameText = document.createTextNode(response.name);
-            let text = document.createTextNode(' says: ' + response.message);
+            let text = document.createTextNode(`searched the photo of ${response.img} and send a message:` + response.message);
             newMsg.appendChild(nameText);
             newMsg.appendChild(text);
             document.getElementById("results").appendChild(newMsg);

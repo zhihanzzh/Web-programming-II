@@ -29,6 +29,7 @@ redisConnection.on('search:request:*', async function (message, channel) {
                 eventName,
                 data: {
                     name,
+                    img,
                     message: msg,
                     results: res
                 }
