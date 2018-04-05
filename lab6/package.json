@@ -4,8 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Han",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "node-redis-pubsub": "^2.0.0",
+    "node-uuid": "^1.4.8",
+    "socket.io": "^2.1.0"
+  }
 }

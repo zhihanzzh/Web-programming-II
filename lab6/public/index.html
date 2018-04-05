@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Search Pixabay</title>
+</head>
+
+<body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <h1>welcome! just type anything you wannna search for</h1>
+    <label>username</label>
+    <input id="username" value="username">
+    <input type="button" value="submit" id="usernameBtn" />
+    <label>image</label>
+    <input id="image" value="image">
+    <button type="submit">submit</button>
+    <label>message</label>
+    <input id="message" value="meassage">
+    <button type="submit">submit</button>
+    <script>
+        const socket = io();
+        document.getElementById("usernameBtn").onclick = function () {
+            socket.emit("direct message", document.getElementById("username").value);
+        }
+
+    </script>
+</body>
+
+</html>
