@@ -24,10 +24,7 @@
     </form>
     <div id="results"></div>
     <script>
-        // let img = document.createElement("img")
-        // img.setAttribute("id","img");  
-        // img.setAttribute("src","https://pixabay.com/get/ea34b50f2cfd033ed1584d05fb1d4e93ea73e0d01bac104497f2c87ca4ecb5bf_640.jpg");
-        // document.getElementById("results").appendChild(img);
+
         const socket = io();
         document.getElementById("Btn").onclick = function () {
             let data = {
@@ -39,26 +36,31 @@
         }
 
         socket.on('response', function (response) {
-            console.log(response);
-            let resultsContainer = $('#results');
+            let newMsg = document.createElement('p');
+            //let userDiv = document.createElement('div');
+            let nameText = document.createTextNode(response.name);
+           // userDiv.appendChild(nameText);
+            let text = document.createTextNode(' says: ' + response.message);
+            newMsg.appendChild(nameText);
+            newMsg.appendChild(text);
+            document.getElementById("results").appendChild(newMsg);
+            
             let hits = response.results.hits;
             for (let i = 0; i < hits.length; i++) {
-                let newImg = document.createElement('img');
-                newImg.src = hits[i].previewURL;
-                newImg.alt = 'A pixabay result tagged ' +
-                    hits[i].tags + ' uploaded by ' + hits[i].user;
-                resultsContainer.prepend(newImg);
+                // let newImg = document.createElement('img');
+                // newImg.src = hits[i].previewURL;
+                // newImg.alt = 'A pixabay result tagged ' +
+                //     hits[i].tags + ' uploaded by ' + hits[i].user;
+                // resultsContainer.prepend(newImg);
+
+                let img = document.createElement("img")
+                img.setAttribute("id", "img");
+                img.setAttribute("src", hits[i].previewURL);
+                document.getElementById("results").appendChild(img);
             }
-            let newMsg = document.createElement('p');
-            newMsg.className = 'message';
-            let userSpan = document.createElement('span');
-            let nameText = document.createTextNode(response.name);
-            userSpan.appendChild(nameText);
-            userSpan.className = 'user';
-            let text = document.createTextNode(' says: ' + response.message);
-            newMsg.appendChild(userSpan);
-            newMsg.appendChild(text);
-            resultsContainer.prepend(newMsg);
+
+
+            
         });
 
 
