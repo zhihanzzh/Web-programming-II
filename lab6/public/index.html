@@ -11,11 +11,11 @@
 
     <h1>welcome! just type anything you wanna search for</h1>
     <form>
-        <label>username</label>
+        <label for="username">username</label>
         <input id="username">
-        <label>image</label>
+        <label for="image">image</label>
         <input id="image">
-        <label>message</label>
+        <label for="message">message</label>
         <input id="message">
         <input type="button" value="submit" id="Btn" />
     </form>
@@ -28,19 +28,19 @@
                 img: document.getElementById("image").value,
                 message: document.getElementById("message").value
             }
-           
-            
-            document.getElementById("username").setAttribute("readonly", true);
+
+
             socket.emit("query", data);
-            document.getElementById("message").setAttribute("value", ''); 
-            document.getElementById("image").setAttribute("value", '');
+            document.getElementById("image").value = "";
+            document.getElementById("message").value = "";
         }
 
 
         socket.on('response', function (response) {
+            document.getElementById("username").setAttribute("readonly", true);
             let newMsg = document.createElement('p');
             let nameText = document.createTextNode(response.name);
-            let text = document.createTextNode(`searched the photo of ${response.img} and send a message:` + response.message);
+            let text = document.createTextNode(` searched the photo of ${response.img} and send a message:` + response.message);
             newMsg.appendChild(nameText);
             newMsg.appendChild(text);
             document.getElementById("results").appendChild(newMsg);
@@ -53,9 +53,28 @@
             }
         });
 
+        socket.on('noName', function (error) {
+            let msg = document.createElement('p');
+            let text = document.createTextNode(error);
+            msg.appendChild(text);
+            document.getElementById("results").appendChild(msg);
+        });
 
+        socket.on('noSearch', function (error) {
+            let msg = document.createElement('p');
+            let text = document.createTextNode(error);
+            msg.appendChild(text);
+            document.getElementById("results").appendChild(msg);
+        });
+
+        socket.on('fail', function (error) {
+            let msg = document.createElement('p');
+            let text = document.createTextNode(error);
+            msg.appendChild(text);
+            document.getElementById("results").appendChild(msg);
+        });
     </script>
-    <script src="../tota11y.min.js"></script>
+    <script src="./js/tota11y.min.js"></script>
 </body>
 
 </html>

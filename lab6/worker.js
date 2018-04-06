@@ -12,6 +12,7 @@ redisConnection.on('search:request:*', async function (message, channel) {
     let name = message.data.name;
     let img = message.data.img;
     let msg = message.data.message;
+    
     try {
         let params = {
             key: "8594252-c5bcbfbb14b8e301fde5f14b1",

@@ -1,7 +1,8 @@
 const app = require('express')();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
-//const pixabay = io.of('/pixabay');
+const static = require('express').static(__dirname + '/public');
+app.use("/", static);
 const nrpSender = require('./npr-sender-shim');
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
@@ -9,20 +10,25 @@ app.get('/', (req, res) => {
 
 
 io.on('connection', function (socket) {
-    console.log('a user connected');
     socket.on("query", async (msg) => {
-        try {
-            let response = await nrpSender.sendMessage({
-                eventName: 'search',
-                data: msg
-            });
-            let hits = response.results.hits;
-            console.log(response)
-            //console.log(response.results.hits.length)
-            io.emit('response', response);
-        } catch (e) {
-            socket.emit('request-fail', e.message);
+        if (msg.name === '') {
+            socket.emit('noName', 'please provide a name');
+        } else if(msg.img === '') {
+            socket.emit('noSearch', 'please provide a name of image to search');
+        } else {
+            try {
+                let response = await nrpSender.sendMessage({
+                    eventName: 'search',
+                    data: msg
+                });
+                let hits = response.results.hits;
+                //console.log(response.results.hits.length)
+                io.emit('response', response);
+            } catch (e) {
+                socket.emit('fail', e.message);
+            }
         }
+       
     });
 });
 
